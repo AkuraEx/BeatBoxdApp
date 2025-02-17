@@ -1,21 +1,21 @@
 "use client";
-
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import Image from "next/image";
 import  React  from "react";
 import { fetchMessage } from "../utils/api.ts";
 
-type Info = {
-  id: number;
-  title: string;
-  contents: string;
-  created: string;
-};
 
 
 export async function getServerSideProps() {
   const res = await fetchMessage();
-  const data = await res;
+  const data: Array<string> = [] ;
+
+  res.forEach((entry: any) => {
+    data.push(JSON.stringify(entry.id));
+  }) 
+
+  
+
 
   return {
     props: {
@@ -23,6 +23,7 @@ export async function getServerSideProps() {
     },
   };
 }
+
 
 
 export default function Home({ data,  }:
@@ -49,7 +50,13 @@ export default function Home({ data,  }:
       <p>WORDS</p>
       <p>fdsa</p>
       <p>asdf</p>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+
+      <ul id = "index">   
+        {data.map((entry) => (
+          <a key={entry} href={`http://localhost:3000/albums/${entry}`}>{entry}<br/></a>
+        ))}
+      </ul>
+
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <p>Words</p>
       </main>
