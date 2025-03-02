@@ -19,17 +19,25 @@ export async function fetchMessage() {
     }
 }
 
-export async function fetchNote(ID: Number) {
+export async function fetchAlbums() {
     try {
-        const response = await fetch("http://localhost:8080/note", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
+        const response = await fetch("http://localhost:8080/albums");
+        if(!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
 
-            body: JSON.stringify ({
-                id: ID,
-            }),
+        return data.message;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+export async function fetchAlbum(Slug: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/album?slug=${Slug}`, {
+            method: "Get",
         })
         if (!response.ok) {
             const errorText = await response.text(); // Get error message if available
@@ -38,7 +46,7 @@ export async function fetchNote(ID: Number) {
         
          const data = await response.json(); 
 
-        return data;
+        return data.album;
     } catch(error) {
         console.error("Error fetching data:", error);
         return null;

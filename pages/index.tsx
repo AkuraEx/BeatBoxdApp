@@ -1,17 +1,18 @@
 "use client";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import Image from "next/image";
+import { fetchAlbums } from "../utils/api.ts";
 import  React  from "react";
-import { fetchMessage } from "../utils/api.ts";
 
 
 
+  
 export async function getServerSideProps() {
-  const res = await fetchMessage();
+  const res = await fetchAlbums();
   const data: Array<string> = [] ;
 
   res.forEach((entry: any) => {
-    data.push(JSON.stringify(entry.id));
+    data.push(JSON.stringify(entry));
   }) 
 
   
@@ -33,6 +34,7 @@ export default function Home({ data,  }:
     <div>
       <div className="mydict">
         <div>
+          <img className = "yuhh" src="BeatBoxd.png" alt="BeatBoxd"></img>
           <label>
             <input type="radio" name="radio" />
             <span>Sign In</span>
@@ -43,19 +45,19 @@ export default function Home({ data,  }:
           </label>
           <label>
             <input type="radio" name="radio" />
-            <span>Albums</span>
+            <span><a href="http://localhost:3000/albums/">Albums</a></span>
           </label>
         </div>
       </div>
       <p>WORDS</p>
       <p>fdsa</p>
-      <p>asdf</p>
-
       <ul id = "index">   
         {data.map((entry) => (
-          <a key={entry} href={`http://localhost:3000/albums/${entry}`}>{entry}<br/></a>
+          <p key={entry}>{entry}<br/></p>
         ))}
       </ul>
+
+          <a href="http://localhost:3000/albums/">albums<br/></a>
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <p>Words</p>
