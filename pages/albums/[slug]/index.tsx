@@ -33,7 +33,7 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
     return (
         <div>
             <div className="mydict">
-                <div>
+                <div className='banner'>
                     <Image width="350" height="100" src="/BeatBoxd.png" alt="BeatBoxd"/>
                 <label>
                     <input type="radio" name="radio" />
@@ -44,13 +44,23 @@ export default function Home({ data }: InferGetServerSidePropsType<typeof getSer
                     <span>Create An Account</span>
                 </label>
                 <label>
-                    <input type="radio" name="radio" />
-                    <span><a href="http://localhost:3000/albums/">Albums</a></span>
-                </label>
-                    <a href={`http://localhost:3000`}>
-                    {data.Title}
-                    </a>
+                <input
+                    type="radio"
+                    name="radio"
+                    onClick={() => (window.location.href = "http://localhost:3000/albums/")}
+                    />
+                    <span>Albums</span>
+                </label> 
                 </div>
+                    <a href={`http://localhost:3000`}>
+                     Back to Front
+                    </a>
+                    <div>
+                        <img className = "cover" src={`../${data.slug}.jpg`} alt={data.Title} />
+                        <p> {data.Body}<br/>
+                         {data.Added_On} <br/>
+                         {data.Title} </p>
+                    </div>
             </div>
         </div>
     )

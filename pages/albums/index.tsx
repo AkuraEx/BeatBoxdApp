@@ -36,7 +36,7 @@ export default function Home({ data,  }:
   return (
     <div>
       <div className="mydict">
-        <div>
+        <div className = "banner">
           <img className = "yuhh" src="BeatBoxd.png" alt="BeatBoxd"></img>
           <label>
             <input type="radio" name="radio" />
@@ -47,20 +47,25 @@ export default function Home({ data,  }:
             <span>Create An Account</span>
           </label>
           <label>
-            <input type="radio" name="radio" />
-            <span><a href="http://localhost:3000/albums/">Albums</a></span>
+            <input
+              type="radio"
+              name="radio"
+              onClick={() => (window.location.href = "http://localhost:3000/albums/")}
+            />
+            <span>Albums</span>
           </label>
         </div>
       </div>
-      <ul id = "index">   
+      <ul id = "index" className="albumContainer">   
         {data.map((entry: any) => (
       <div key={entry.id}>
-        <img className="cover" src={`${entry.slug}.jpg`} alt={entry.title} />
-        <a href={`http://localhost:3000/albums/${entry.slug}`}>{entry.title}<br/></a>
+          <a href={`http://localhost:3000/albums/${entry.slug}`}><img className = "cover" src={`${entry.slug}.jpg`} alt={entry.title} /></a>
+          <a href={`http://localhost:3000/albums/${entry.slug}`}>{entry.title}<br/></a>
       </div>
       ))}
 
       </ul>
+
 
 
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">

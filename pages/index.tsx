@@ -5,7 +5,6 @@ import { fetchAlbums } from "../utils/api.ts";
 import  React  from "react";
 
 
-
   
 export async function getServerSideProps() {
   const res = await fetchAlbums();
@@ -33,7 +32,7 @@ export default function Home({ data,  }:
   return (
     <div>
       <div className="mydict">
-        <div>
+        <div className = "banner">
           <img className = "yuhh" src="BeatBoxd.png" alt="BeatBoxd"></img>
           <label>
             <input type="radio" name="radio" />
@@ -44,8 +43,12 @@ export default function Home({ data,  }:
             <span>Create An Account</span>
           </label>
           <label>
-            <input type="radio" name="radio" />
-            <span><a href="http://localhost:3000/albums/">Albums</a></span>
+            <input
+              type="radio"
+              name="radio"
+              onClick={() => (window.location.href = "http://localhost:3000/albums/")}
+            />
+            <span>Albums</span>
           </label>
         </div>
       </div>

@@ -76,6 +76,18 @@ label:last-child span {
 }
 
 .cover {
-  height: 300;
-  width: 300;
+  height: 250;
+  width:  250;
+}
+
+.albumContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 50px;
+  padding: 50px;
+}
+
+.banner {
+  width: 100%;
 }
