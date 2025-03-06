@@ -3,7 +3,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import Image from "next/image";
 import { fetchAlbums } from "../utils/api.ts";
 import  React  from "react";
-
+import Banner from '../components/banner';
 
   
 export async function getServerSideProps() {
@@ -32,25 +32,7 @@ export default function Home({ data,  }:
   return (
     <div>
       <div className="mydict">
-        <div className = "banner">
-          <img className = "yuhh" src="BeatBoxd.png" alt="BeatBoxd"></img>
-          <label>
-            <input type="radio" name="radio" />
-            <span>Sign In</span>
-          </label>
-          <label>
-            <input type="radio" name="radio" />
-            <span>Create An Account</span>
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="radio"
-              onClick={() => (window.location.href = "http://localhost:3000/albums/")}
-            />
-            <span>Albums</span>
-          </label>
-        </div>
+        <Banner />
       </div>
       <p>WORDS</p>
       <p>fdsa</p>

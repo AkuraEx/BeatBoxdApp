@@ -1,66 +1,72 @@
 "use client";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import  React  from "react";
-import { fetchAlbum } from "../../../utils/api.ts";
+import { fetchAlbum, fetchArtist, fetchReviews, createReview } from "../../../utils/api.ts";
 import Image from 'next/image';
+import ReviewForm from '../../../components/review';
+import Banner from '../../../components/banner';
 
-
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export async function getServerSideProps(context: any) {
     const { slug } = context.params as { slug: string };
 
     console.log('Fetching album with slug:', slug);
 
-    const res = await fetchAlbum(slug);
+    const albumRes = await fetchAlbum(slug);
+    const artistRes = await fetchArtist(Number(albumRes.AId));
+    const reviewRes = await fetchReviews(Number(albumRes.AlId));
+    const reviewData = reviewRes.map((entry: any) => ({
+    RvId: entry.RvId,
+    Body: entry.Body,
+    Rate: entry.Rate,
+  }));
     
+    console.log(reviewRes);
 
-    if (!res) {
+    if (!albumRes) {
     return {
       notFound: true,
     };
   }
 
 return {
-    props: { data: res },
+    props: { albumData: albumRes, 
+        artistData: artistRes,
+        reviewData
+    },
   };
 };
 
-export default function Home({ data }: InferGetServerSidePropsType<typeof getServerSideProps>
+export default function Home({ albumData, artistData, reviewData }: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
-    if (!data) {
+    if (!albumData) {
         return <div>Album not found</div>;
     }
     return (
         <div>
             <div className="mydict">
-                <div className='banner'>
-                    <Image width="350" height="100" src="/BeatBoxd.png" alt="BeatBoxd"/>
-                <label>
-                    <input type="radio" name="radio" />
-                    <span>Sign In</span>
-                </label>
-                <label>
-                    <input type="radio" name="radio" />
-                    <span>Create An Account</span>
-                </label>
-                <label>
-                <input
-                    type="radio"
-                    name="radio"
-                    onClick={() => (window.location.href = "http://localhost:3000/albums/")}
-                    />
-                    <span>Albums</span>
-                </label> 
-                </div>
+                <Banner />
                     <a href={`http://localhost:3000`}>
                      Back to Front
                     </a>
                     <div>
-                        <img className = "cover" src={`../${data.slug}.jpg`} alt={data.Title} />
-                        <p> {data.Body}<br/>
-                         {data.Added_On} <br/>
-                         {data.Title} </p>
+                        <img className = "cover" src={`../${albumData.slug}.jpg`} alt={albumData.Title} />
+                        <p> {artistData.Artist_Name}<br/>
+                         {albumData.Body}<br/>
+                         {albumData.Added_On} <br/>
+                         {albumData.Title} </p>
+                         <ReviewForm albumData={albumData}/>
                     </div>
+
+                    <ul id = "index">   
+                            {reviewData.map((entry: any) => (
+                        <div key={entry.RvId}>
+                            <div>
+                            Review: {entry.RvId}<br/>
+                            Body: {entry.Body}<br/>
+                            Rating: {entry.Rate}</div>
+                        </div>
+                        ))}
+                    </ul>
             </div>
         </div>
     )
