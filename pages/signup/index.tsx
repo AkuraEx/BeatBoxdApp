@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import validateEmail from '../../utils/validateEmail';
 import validatePassword from '../../utils/validatePassword';
@@ -8,6 +7,7 @@ import { createUser } from '../../utils/api';
 export default function Signup() {
     const [formData, setFormData] = useState({ username: '', email: '', password: '' });
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -32,7 +32,7 @@ export default function Signup() {
         const res = await createUser(formData.username, formData.email, formData.password);
             console.log(res);
         if (res) {
-            console.log('✅ Success');
+            setSuccessMessage(`Welcome To BeatBoxd, ${formData.username}!`)
         } else {
             console.log('❌ Error: Submission failed');
         }
@@ -47,7 +47,6 @@ export default function Signup() {
 
     return (
         <div>
-            <h1>Signup</h1>
             <form onSubmit={handleSubmit}>
                 <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Enter username" />
                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter email" />
@@ -55,6 +54,7 @@ export default function Signup() {
                 <button type="submit">Signup</button>
             </form>
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+            {successMessage && <p style={{ color: "green "}}>{successMessage}</p>}
         </div>
     );
 }
