@@ -92,8 +92,35 @@ export async function createReview(AlId: number, Body: string, Rate: number) {
             throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
         }
 
-        console.log(Result);
         return Result;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+export async function createUser(Username: string, Email: string, Password: string) {
+    try {
+
+        const todo = {
+            Username: Username,
+            Email: Email,
+            Password: Password
+        };
+
+        const response = await fetch(`http://localhost:8080/user?Username=${Username}&Email=${Email}&Password=${Password}` , {
+            method: "POST",
+            body: JSON.stringify(todo),
+            headers: { 'Content-Type': 'application/json'} 
+        })
+        if (!response.ok) {
+            const errorText = await response.text(); // Get error message if available
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+
+        const data = await response.json(); 
+
+        return data;
     } catch(error) {
         console.error("Error fetching data:", error);
         return null;

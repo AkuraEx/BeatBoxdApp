@@ -3,8 +3,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import  React  from "react";
 import { fetchAlbum, fetchArtist, fetchReviews, createReview } from "../../../utils/api.ts";
 import Image from 'next/image';
-import ReviewForm from '../../../components/review';
-import Banner from '../../../components/banner';
+import ReviewForm from '../../../components/review.tsx';
 
 export async function getServerSideProps(context: any) {
     const { slug } = context.params as { slug: string };
@@ -43,31 +42,28 @@ export default function Home({ albumData, artistData, reviewData }: InferGetServ
     }
     return (
         <div>
-            <div className="mydict">
-                <Banner />
-                    <a href={`http://localhost:3000`}>
-                     Back to Front
-                    </a>
-                    <div>
-                        <img className = "cover" src={`../${albumData.slug}.jpg`} alt={albumData.Title} />
-                        <p> {artistData.Artist_Name}<br/>
-                         {albumData.Body}<br/>
-                         {albumData.Added_On} <br/>
-                         {albumData.Title} </p>
-                         <ReviewForm albumData={albumData}/>
-                    </div>
-
-                    <ul id = "index">   
-                            {reviewData.map((entry: any) => (
-                        <div key={entry.RvId}>
-                            <div>
-                            Review: {entry.RvId}<br/>
-                            Body: {entry.Body}<br/>
-                            Rating: {entry.Rate}</div>
-                        </div>
-                        ))}
-                    </ul>
+            <a href={`http://localhost:3000`}>
+                Back to Front
+            </a>
+            <div>
+                <img className = "cover" src={`../${albumData.slug}.jpg`} alt={albumData.Title} />
+                <p> {artistData.Artist_Name}<br/>
+                    {albumData.Body}<br/>
+                    {albumData.Added_On} <br/>
+                    {albumData.Title} </p>
+                    <ReviewForm albumData={albumData}/>
             </div>
+
+            <ul id = "index">   
+                    {reviewData.map((entry: any) => (
+                <div key={entry.RvId}>
+                    <div>
+                    Review: {entry.RvId}<br/>
+                    Body: {entry.Body}<br/>
+                    Rating: {entry.Rate}</div>
+                </div>
+                ))}
+            </ul>
         </div>
     )
 }

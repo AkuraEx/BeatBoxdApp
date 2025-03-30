@@ -27,13 +27,14 @@ body {
   box-shadow: 0 0 0 4px #b5c9fc;
 }
 
-.mydict div {
+.mybanner div {
   display: flex;
   flex-wrap: wrap;
   margin-top: 0.5rem;
+  width: 100%;
 }
 
-.mydict input[type="radio"] {
+.mybanner input[type="radio"] {
   clip: rect(0 0 0 0);
   clip-path: inset(100%);
   height: 1px;
@@ -42,7 +43,7 @@ body {
   width: 1px;
 }
 
-.mydict input[type="radio"]:hover + span {
+.mybanner input[type="radio"]:hover + span {
   box-shadow: 0 0 0 0.0625em #0043ed;
   background-color: #dee7ff;
   z-index: 1;
@@ -55,24 +56,17 @@ label span {
   padding: 1.5em .75em;
   position: relative;
   margin-left: .0625em;
+  margin-right: 1em;
   box-shadow: 0 0 0 0.0625em #b5bfd9;
   letter-spacing: .05em;
   color: #d6ddee;
   transition: background-color .5s ease;
+  border-radius: .375em .375em .375em .375em;
 }
 
-label:first-child span {
-  border-radius: .375em 0 0 .375em;
-}
 
-label:last-child span {
-  border-radius: 0 .375em .375em 0;
-}
-
-.yuhh {
-  justify-content: left;
-  height: 100; 
-  width: 350;
+.clickable {
+  cursor: pointer;
 }
 
 .cover {
@@ -86,8 +80,4 @@ label:last-child span {
   flex-wrap: wrap;
   gap: 50px;
   padding: 50px;
-}
-
-.banner {
-  width: 100%;
 }
