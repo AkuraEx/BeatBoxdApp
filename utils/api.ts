@@ -53,6 +53,21 @@ export async function fetchAlbum(Slug: string) {
     }
 }
 
+export async function fetchArtists() {
+    try {
+        const response = await fetch("http://localhost:8080/artists");
+        if(!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        return data.message;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
 export async function fetchArtist(AId: number) {
     try {
         const response = await fetch(`http://localhost:8080/artist?AId=${AId}`, {
@@ -108,7 +123,7 @@ export async function createUser(Username: string, Email: string, Password: stri
             Password: Password
         };
 
-        const response = await fetch(`http://localhost:8080/user?Username=${Username}&Email=${Email}&Password=${Password}` , {
+        const response = await fetch(`http://localhost:8080/user/signup?Username=${Username}&Email=${Email}&Password=${Password}` , {
             method: "POST",
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json'} 
@@ -119,6 +134,52 @@ export async function createUser(Username: string, Email: string, Password: stri
         }
 
         const data = await response.json(); 
+
+        return data;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+export async function authenticateUser(Username: string, Password: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/user/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json"},
+            body: JSON.stringify({ Username, Password }),
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+
+        const data = await response.json();
+        localStorage.setItem("token", data.token);
+
+        return data;
+        } catch(error) {
+            console.error("Error fetching data:", error)
+            return null;
+        }
+}
+
+
+export async function authenticateSession() {
+    try {
+        const response = await fetch(`http://localhost:8080/user/session`, {
+            method: "GET",
+            headers: { 
+                "x-access-token": localStorage.getItem("token") || "" 
+            },
+        });
+        if (!response.ok) {
+            const errorText = await response.text(); // Get error message if available
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+        
+         const data = await response.json(); 
 
         return data;
     } catch(error) {

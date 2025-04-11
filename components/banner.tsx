@@ -40,6 +40,14 @@ return(
                             />
                         <span>Albums</span>
                     </label> 
+                    <label>
+                        <input
+                            type="radio"
+                            name="radio"
+                            onClick={() => router.push("/artists")}
+                            />
+                        <span>Artist</span>
+                    </label> 
                 </div>
             </div>
     );
