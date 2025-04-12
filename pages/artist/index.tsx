@@ -39,7 +39,7 @@ export default function Home({ data,  }:
       <ul id = "index">   
         {data.map((entry: any) => (
       <div key={entry.id}>
-          <a href={`http://localhost:3000/`}>{entry.artist}{entry.date}<br/></a>
+          <a href={`http://localhost:3000/artist/${entry.slug}`}>{entry.artist}{entry.date}<br/></a>
       </div>
       ))}
       </ul>

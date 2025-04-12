@@ -27,46 +27,37 @@ body {
   box-shadow: 0 0 0 4px #b5c9fc;
 }
 
-input {
-  color: black;
-}
-
-.mybanner div {
+/* Keep buttons in a horizontal row */
+.mybanner .button-group {
   display: flex;
   flex-wrap: wrap;
   margin-top: 0.5rem;
-  width: 100%;
 }
 
-.mybanner input[type="radio"] {
-  clip: rect(0 0 0 0);
-  clip-path: inset(100%);
-  height: 1px;
-  overflow: hidden;
-  white-space: nowrap;
-  width: 1px;
+.mybanner .my-button {
+  all: unset;
+  display: block; /* originally was "block", but change to "inline-flex" below if needed */
+  cursor: pointer;
+  padding: 1.5em 0.75em;
+  position: relative;
+  margin-left: 0.0625em;
+  margin-right: 1em;
+  box-shadow: 0 0 0 0.0625em #b5bfd9;
+  letter-spacing: 0.05em;
+  color: #d6ddee;
+  transition: background-color 0.5s ease;
+  border-radius: 0.375em;
+  background-color: transparent;
 }
 
-.mybanner input[type="radio"]:hover + span {
+/* Hover effect */
+.mybanner .my-button:hover {
   box-shadow: 0 0 0 0.0625em #0043ed;
   background-color: #dee7ff;
   z-index: 1;
   color: #0043ed;
 }
 
-label span {
-  display: block;
-  cursor: pointer;
-  padding: 1.5em .75em;
-  position: relative;
-  margin-left: .0625em;
-  margin-right: 1em;
-  box-shadow: 0 0 0 0.0625em #b5bfd9;
-  letter-spacing: .05em;
-  color: #d6ddee;
-  transition: background-color .5s ease;
-  border-radius: .375em .375em .375em .375em;
-}
 
 
 .clickable {

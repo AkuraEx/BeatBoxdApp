@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { authenticateSession, authenticateUser } from '../../utils/api';
 
 export default function Login() {
+    const router = useRouter();
+
     const handleSubmit = async ( e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -16,7 +18,6 @@ export default function Login() {
 
             if (res) {
                 console.log(res)
-                // router.push('/')
             } else {
                 console.log('ERRRRROR');
             }
@@ -31,11 +32,12 @@ export default function Login() {
         try {
             const res = await authenticateSession();
 
-            if (res) {
+            if (res.user) {
                 console.log(res)
-                // router.push('/')
+                router.push('/')
             } else {
                 console.log('ERRRRROR');
+
             }
             } catch (error) {
             console.log("anotha error lol", error);

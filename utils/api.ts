@@ -53,6 +53,25 @@ export async function fetchAlbum(Slug: string) {
     }
 }
 
+export async function fetchArtistsAlbums(AId: number) {
+    try {
+        const response = await fetch(`http://localhost:8080/artists/albums?AId=${AId}`, {
+            method: "Get",
+        })
+        if (!response.ok) {
+            const errorText = await response.text(); // Get error message if available
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+        
+         const data = await response.json(); 
+
+        return data.message;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
 export async function fetchArtists() {
     try {
         const response = await fetch("http://localhost:8080/artists");
@@ -68,9 +87,9 @@ export async function fetchArtists() {
     }
 }
 
-export async function fetchArtist(AId: number) {
+export async function fetchArtist(field: string, value: any) {
     try {
-        const response = await fetch(`http://localhost:8080/artist?AId=${AId}`, {
+        const response = await fetch(`http://localhost:8080/artist?field=${field}&value=${value}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -86,7 +105,6 @@ export async function fetchArtist(AId: number) {
         return null;
     }
 }
-
 
 export async function createReview(AlId: number, Body: string, Rate: number) {
     try {

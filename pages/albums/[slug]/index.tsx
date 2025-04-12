@@ -11,7 +11,7 @@ export async function getServerSideProps(context: any) {
     console.log('Fetching album with slug:', slug);
 
     const albumRes = await fetchAlbum(slug);
-    const artistRes = await fetchArtist(Number(albumRes.AId));
+    const artistRes = await fetchArtist("AId", Number(albumRes.AId));
     const reviewRes = await fetchReviews(Number(albumRes.AlId));
     const reviewData = reviewRes.map((entry: any) => ({
     RvId: entry.RvId,
