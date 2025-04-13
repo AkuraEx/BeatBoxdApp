@@ -18,6 +18,7 @@ export default function Login() {
 
             if (res) {
                 console.log(res)
+                router.push('/')
             } else {
                 console.log('ERRRRROR');
             }
@@ -72,7 +73,6 @@ export default function Login() {
                 </span>
                 <span>Log in with Google</span>
                 </button>
-                <button>Forgot password?</button>
                 <button onClick = {checkToken}>Check if auth??</button>
             </div>
             </div>

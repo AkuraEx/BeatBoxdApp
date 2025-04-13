@@ -185,23 +185,30 @@ export async function authenticateUser(Username: string, Password: string) {
 
 
 export async function authenticateSession() {
-    try {
-        const response = await fetch(`http://localhost:8080/user/session`, {
-            method: "GET",
-            headers: { 
-                "x-access-token": localStorage.getItem("token") || "" 
-            },
-        });
-        if (!response.ok) {
-            const errorText = await response.text(); // Get error message if available
-            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
-        }
-        
-         const data = await response.json(); 
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) return { token: null, user: null };
 
-        return data;
-    } catch(error) {
-        console.error("Error fetching data:", error);
-        return null;
+    const response = await fetch(`http://localhost:8080/user/session`, {
+      method: "GET",
+      headers: {
+        "x-access-token": token,
+      },
+    });
+
+    if (!response.ok) {
+      console.warn(`Auth failed: ${response.status}`);
+      return { token: null, user: null };
     }
+
+    const data = await response.json();
+    return {
+      token: data.token || null,
+      user: data.user || null,
+    };
+  } catch (error) {
+    console.error("Auth error:", error);
+    return { token: null, user: null };
+  }
 }
+
