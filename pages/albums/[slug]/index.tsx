@@ -1,8 +1,7 @@
-"use client";
+'use client';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import  React  from "react";
 import { fetchAlbum, fetchArtist, fetchReviews, createReview } from "../../../utils/api.ts";
-import Image from 'next/image';
 import ReviewForm from '../../../components/review.tsx';
 
 export async function getServerSideProps(context: any) {
@@ -37,18 +36,15 @@ return {
 
 export default function Home({ albumData, artistData, reviewData }: InferGetServerSidePropsType<typeof getServerSideProps>
 ) {
-    if (!albumData) {
-        return <div>Album not found</div>;
-    }
     return (
         <div>
-            <a href={`http://localhost:3000`}>
+            <a href={`/`}>
                 Back to Front
             </a>
             <div>
                 <img className = "cover" src={`../${albumData.slug}.jpg`} alt={albumData.Title} />
-                <p> {artistData.Artist_Name}<br/>
-                    {albumData.Body}<br/>
+                <a href={`/artist/${artistData.slug}`}> {artistData.Artist_Name}</a>
+                <p> {albumData.Body}<br/>
                     {albumData.Added_On} <br/>
                     {albumData.Title} </p>
                     <ReviewForm albumData={albumData}/>

@@ -106,6 +106,25 @@ export async function fetchArtist(field: string, value: any) {
     }
 }
 
+export async function findUser(Username: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/user/find?Username=${Username}`, {
+            method: "Get",
+        })
+        if (!response.ok)    {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+
+        const data = await response.json();
+
+        return data;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
 export async function createReview(AlId: number, Body: string, Rate: number) {
     try {
 
@@ -205,6 +224,7 @@ export async function authenticateSession() {
     return {
       token: data.token || null,
       user: data.user || null,
+      auth: data.auth
     };
   } catch (error) {
     console.error("Auth error:", error);

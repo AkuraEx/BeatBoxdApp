@@ -2,9 +2,12 @@
 import { FormEvent } from 'react'
 import { useRouter } from 'next/router'
 import { authenticateSession, authenticateUser } from '../../utils/api';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Login() {
     const router = useRouter();
+    const { isAuthenticated, user, setIsAuthenticated, setUser } = useAuth();
+
 
     const handleSubmit = async ( e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -17,8 +20,11 @@ export default function Login() {
             const res = await authenticateUser(username, password);
 
             if (res) {
+                setIsAuthenticated(true);
+                setUser(username)
                 console.log(res)
-                router.push('/')
+                console.log("logged in");
+                router.push("/")
             } else {
                 console.log('ERRRRROR');
             }

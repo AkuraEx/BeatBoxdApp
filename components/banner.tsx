@@ -15,14 +15,16 @@ const Banner = () => {
 
   return (
     <div className="mybanner">
+        <div className = "clickable">
+          <img onClick={() => router.push('/')} width="300" height="250" src="/BeatboxdReal(real).png" alt="BeatBoxd" />
+        </div>
       <div className="button-group">
-        <img onClick={() => router.push('/')} width="350" height="100" src="/BeatBoxd.png" alt="BeatBoxd" className="clickable" />
         <button onClick={() => router.push('/artist')} className="my-button">Artists</button>
         <button onClick={() => router.push('/albums')} className="my-button">Albums</button>
 
         {isAuthenticated ? (
           <>
-            <button onClick={() => router.push(`/${user}`)} className="my-button">{user}</button>
+            <button onClick={() => router.push(`/profile/${user}`)} className="my-button">{user}</button>
             <button onClick={handleSignOut} className="my-button">Sign Out</button>
           </>
         ) : (

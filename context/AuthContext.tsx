@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkToken = async () => {
       const res = await authenticateSession();
-      if (res.user) {
+      if (res.auth) {
         setIsAuthenticated(true);
         setUser(res.user.username);
       } else {

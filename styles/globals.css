@@ -27,41 +27,61 @@ body {
   box-shadow: 0 0 0 4px #b5c9fc;
 }
 
-/* Keep buttons in a horizontal row */
-.mybanner .button-group {
+.mybanner {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
+  justify-content: left; /* truly center the button group */
+  align-items: center;
+  height: 6rem; /* or whatever fits your design */
 }
 
-.mybanner .my-button {
-  all: unset;
-  display: block; /* originally was "block", but change to "inline-flex" below if needed */
+.button-group {
+  display: flex;
+  gap: 1rem; /* spacing between buttons */
+}
+
+.my-button {
   cursor: pointer;
-  padding: 1.5em 0.75em;
+  left: 15rem;
+  padding: 1.5em 1em;
   position: relative;
+  margin-top: 0.5em;
   margin-left: 0.0625em;
-  margin-right: 1em;
+  margin-right: 0.0625em;
   box-shadow: 0 0 0 0.0625em #b5bfd9;
   letter-spacing: 0.05em;
-  color: #d6ddee;
-  transition: background-color 0.5s ease;
+  color: #57CAAA;
+  transition: 0.3s ease;
   border-radius: 0.375em;
+  min-width: 100px;
+  text-align: center;
   background-color: transparent;
 }
 
-/* Hover effect */
-.mybanner .my-button:hover {
-  box-shadow: 0 0 0 0.0625em #0043ed;
-  background-color: #dee7ff;
+.my-button:hover {
+  transform: translateY(-10%);
+  box-shadow: 0 0 0 0.0625em #57CAAA;
+  background-color: #57caa944;
   z-index: 1;
-  color: #0043ed;
+  color: #57CAAA;
 }
 
-
-
 .clickable {
+  margin-top: 0.5em;
   cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  left: 7rem;
+  transition: 0.3s ease;
+}
+
+.clickable:hover {
+  transform: translateY(-10%);
+  box-shadow: 0 0 0 0.0625em #57CAAA;
+  border-radius: 0.375em;
+  background-color: #57caa944;
+  z-index: 1;
+  color: #57CAAA;
 }
 
 .cover {

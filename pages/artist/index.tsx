@@ -1,6 +1,5 @@
 "use client";
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import Image from "next/image";
 import { fetchArtists } from "../../utils/api.ts";
 import  React  from "react";
 
@@ -39,7 +38,8 @@ export default function Home({ data,  }:
       <ul id = "index">   
         {data.map((entry: any) => (
       <div key={entry.id}>
-          <a href={`http://localhost:3000/artist/${entry.slug}`}>{entry.artist}{entry.date}<br/></a>
+          <a href={`/artist/${entry.slug}`}><img className = "cover" src={`${entry.slug}.jpg`} alt={entry.artist} /></a>
+          <a href={`/artist/${entry.slug}`}>{entry.artist}<br/></a>
       </div>
       ))}
       </ul>
