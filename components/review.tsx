@@ -13,7 +13,7 @@ const ReviewForm = ({ albumData }: Props) => {
   const [message, setMessage] = useState('');
   const [hoverRating, setHoverRating] = useState<number | null>(null);
 
-  const stars = Array.from({ length: 11 }, (_, i) => (i + 1) * 0.5);
+  const stars = Array.from({ length: 10 }, (_, i) => (i + 1) * 1);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

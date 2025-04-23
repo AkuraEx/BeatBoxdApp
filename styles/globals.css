@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #dfd0d0;
-  --foreground: #171717;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #353535;
@@ -20,7 +15,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* From Uiverse.io by Pradeepsaranbishnoi */ 
+
 :focus {
   outline: 0;
   border-color: #2260ff;
@@ -30,14 +25,14 @@ body {
 .mybanner {
   position: relative;
   display: flex;
-  justify-content: left; /* truly center the button group */
+  justify-content: left;
   align-items: center;
-  height: 6rem; /* or whatever fits your design */
+  height: 6rem;
 }
 
 .button-group {
   display: flex;
-  gap: 1rem; /* spacing between buttons */
+  gap: 1rem;
 }
 
 .my-button {
@@ -85,8 +80,29 @@ body {
 }
 
 .cover {
-  height: 250;
-  width:  250;
+  transition: 0.3s ease-in-out;
+  position: relative;
+  border-radius: 3%;
+  width: 100%;
+  height: 100%;
+}
+
+.cover:hover {
+  outline: 7px solid #57CAAA;
+  transform: translateY(-0.5em);
+}
+
+
+.album {
+  width: 250px; 
+  height: 250px;
+  text-align: center;
+}
+
+.profile_album {
+  width: 100px; 
+  height: 100px;
+  text-align: center;
 }
 
 .albumContainer {
@@ -95,6 +111,53 @@ body {
   flex-wrap: wrap;
   gap: 50px;
   padding: 50px;
+  margin-left: 8%;
+}
+
+
+.profileContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1%;
+  padding: 1%;
+}
+
+.title {
+  display: block;
+  width: 100%;
+  word-wrap: break-word; 
+  text-align: center; 
+  font-size: 14px; 
+  margin-top: 10px; 
+}
+
+.clickableText{
+  color: white;
+  text-decoration: underline;
+  text-underline-position:auto ;
+  transition: ease-in-out 0.1s;
+}
+
+.clickableText:hover{
+  color: #57CAAA;
+}
+
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frontpageHeader {
+  min-height: 25vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(20px + 2vmin);
+  color: rgb(190, 190, 190);
 }
 
 
@@ -105,14 +168,6 @@ body {
 
 
 
-
-
-
-
-
-
-/* Sign up and Login Forms */
-/* From Uiverse.io by Galahhad */ 
 .content i {
   margin-bottom: 41px;
 }

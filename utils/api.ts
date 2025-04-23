@@ -34,9 +34,9 @@ export async function fetchAlbums() {
     }
 }
 
-export async function fetchAlbum(Slug: string) {
+export async function fetchAlbum(field: string, value: any) {
     try {
-        const response = await fetch(`http://localhost:8080/album?slug=${Slug}`, {
+        const response = await fetch(`http://localhost:8080/album?field=${field}&value=${value}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -119,6 +119,26 @@ export async function findUser(Username: string) {
         const data = await response.json();
 
         return data;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+export async function findUserSaved(UId: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/user/album?UId=${UId}`, {
+            method: "GET",
+        })
+        if (!response.ok)    {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log(data.message);
+
+        return data.message;
     } catch(error) {
         console.error("Error fetching data:", error);
         return null;
@@ -237,6 +257,31 @@ export async function createArtist(AId: string, Artist_Name: string, Body: strin
                 return null;
             }
     }
+
+export async function saveAlbum(UId: number, AlId: string) {
+    try {
+        const todo = {
+            UId: UId,
+            AlId: AlId
+        };
+
+        const response = await fetch(`http://localhost:8080/album/save?UId=${UId}&AlId=${AlId}` , {
+                method: "POST",
+                body: JSON.stringify(todo),
+                headers: { 'Content-Type': 'application/json'} 
+            })
+            if (!response.ok) {
+                const errorText = await response.text(); // Get error message if available
+                throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+            }
+
+            console.log(response);
+
+            } catch(error) {
+                console.error("Error fetching data:", error);
+                return null;
+    }
+}
 
 export async function authenticateUser(Username: string, Password: string) {
     try {

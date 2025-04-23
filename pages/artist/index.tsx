@@ -36,12 +36,11 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
-      <ul id="index">
+      <ul id="index" className="albumContainer">
         {data.map((entry: any, index: number) => (
           <div key={entry.id}>
-            <span>{index + 1}. </span> 
-            <a href={`/artist/${entry.slug}`}>
-              <img className="cover" src={`${entry.IMG_URL}`} alt={entry.artist} />
+            <a href={`/artist/${entry.slug}`} max-width="300px">
+              <img className="album" src={`${entry.IMG_URL}`} alt={entry.artist} />
             </a>
             <a href={`/artist/${entry.slug}`}>
               {entry.artist}

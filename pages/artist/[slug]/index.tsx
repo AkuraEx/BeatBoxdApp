@@ -17,9 +17,10 @@ export async function getServerSideProps(context: any) {
     const albums = albumRes.map((entry: any) => ({
     AlId: entry.AlId,
     AId: entry.AId,
-    slug: entry.slug,
     Title: entry.Title,
     Body: entry.Body,
+    IMG_URL: entry.IMG_URL,
+    slug: entry.slug,
     Date: entry.Added_On,
   }));
 
@@ -46,11 +47,11 @@ export default function Home({ albums, artistData }: InferGetServerSidePropsType
     }
     return (
         <div>
-            <a href={`/`}>
+            <a href={`/artist`}>
                 Back to Front
             </a>
             <div>
-                <img className = "cover" src={artistData.IMG_URL} alt="img broke yo" />
+                <img className = "album" src={artistData.IMG_URL} alt="img broke yo" />
                 <p> {artistData.Artist_Name}<br/>
                     {artistData.Body}<br/>
                     {artistData.Added_On} <br/><br/>
@@ -58,11 +59,11 @@ export default function Home({ albums, artistData }: InferGetServerSidePropsType
             </div>
 
             <h1> ALBUMS: <br/><br/></h1>
-            <ul id = "index">   
+            <ul id = "index" className="albumContainer">   
                     {albums.map((entry: any) => (
-                <div key={entry.AlId}>
-            <a href={`/albums/${entry.slug}`}><img className = "cover" src={`entry.IMG`} alt={entry.artist} /></a>
-                    <div>
+                <div key={entry.AlId} className='album'>
+            <a href={`/albums/${entry.slug}`}><img className = "cover" src={entry.IMG_URL} alt={entry.artist} /></a>
+                    <div className="title">
                     Title: {entry.Title}<br/>
                     Body: {entry.Body}<br/>
                     Date: {entry.Date}</div>

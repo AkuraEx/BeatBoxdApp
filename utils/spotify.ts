@@ -37,7 +37,7 @@ async function getAccessToken(): Promise<string> {
 
 
 
-export async function spotfetchAlbums(query: string, limit: number = 15): Promise<void> {
+export async function spotfetchAlbums(query: any, limit: number = 50): Promise<void> {
   const token = await getAccessToken();
   const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=album&limit=${limit}`;
 
@@ -56,18 +56,29 @@ export async function spotfetchAlbums(query: string, limit: number = 15): Promis
   albums.forEach(async (album: any, index: number) => {
     console.log(`${index + 1}. ${album.name} (ID: ${album.id}) (Name: ${album.artists[0].name})`);
 
-    const artistRes = await fetchArtist("Artist_Name", album.artists[0].name);
+    const artistRes = await fetchArtist("AId", album.artists[0].id);
+    const albumRes = await fetchAlbum("ALId", album.id)
 
-    console.log(artistRes.AId);
+    if(artistRes && !albumRes) {
+        try{
+            const slug = album.name
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')        
+            .replace(/[^a-z0-9-_]/g, '') 
+            .replace(/-+/g, '-');       
 
-    if(artistRes) {
-        const slug = album.name.toLowerCase().replace(/\s+/g, '-');
-        createAlbum(artistRes.AId, album.id, album.name, "Whateva", album.images[0].url, slug);
+            await createAlbum(artistRes.AId, album.id, album.name, "Whateva", album.images[0].url, slug);
+
+            console.log("New Album Inserted:", album.name);
+        } catch(error){
+            console.log(error);
+        }
     }
   });
 }
 
-export async function spotfetchArtists(query: string, limit: number = 15): Promise<void> {
+export async function spotfetchArtists(query: any, limit: number = 50): Promise<void> {
   const token = await getAccessToken();
   const url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=${limit}`;
 
@@ -86,11 +97,22 @@ export async function spotfetchArtists(query: string, limit: number = 15): Promi
   artists.forEach(async (artist: any, index: number) => {
     console.log(`${index + 1}. ${artist.name} (ID: ${artist.id}) (Name: ${artist.popularity}), ${artist.images[0].url}`);
 
-    const artistRes = await fetchArtist("Artist_Name", artist.name);
+    const artistRes = await fetchArtist("AId", artist.id);
 
     if(!artistRes) {
-        const slug = artist.name.toLowerCase().replace(/\s+/g, '-');
-        createArtist(artist.id, artist.name, "Whateva", artist.images[0].url, slug );
+        try{
+            const slug = artist.name
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-')        
+            .replace(/[^a-z0-9-_]/g, '') 
+            .replace(/-+/g, '-');      
+            
+            await createArtist(artist.id, artist.name, "Whateva", artist.images[0].url, slug );
+            console.log("new artist inserted:", artist.name);
+        } catch(error) {
+            console.log(error); 
+        }
     }
   });
 }
