@@ -179,6 +179,65 @@ export async function createUser(Username: string, Email: string, Password: stri
     }
 }
 
+export async function createAlbum(AId: string, ALId: string, Title: string, Body: string, IMG_URL: string, slug: string) {
+    try{
+
+            const todo = {
+                AId: AId,
+                ALId: ALId,
+                Title: Title,
+                Body: Body,
+                IMG_URL: IMG_URL,
+                slug: slug
+            };
+
+            const response = await fetch(`http://localhost:8080/album/create?AId=${AId}&ALId=${ALId}&Title=${Title}&Body=${Body}&IMG_URL=${IMG_URL}&slug=${slug}` , {
+                method: "POST",
+                body: JSON.stringify(todo),
+                headers: { 'Content-Type': 'application/json'} 
+            })
+            if (!response.ok) {
+                const errorText = await response.text(); // Get error message if available
+                throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+            }
+
+            console.log(response);
+
+            } catch(error) {
+                console.error("Error fetching data:", error);
+                return null;
+            }
+    }
+
+export async function createArtist(AId: string, Artist_Name: string, Body: string, IMG_URL: string, slug: string) {
+    try{
+
+            const todo = {
+                AId: AId,
+                Artist_Name: Artist_Name,
+                Body: Body,
+                IMG_URL: IMG_URL,
+                slug: slug
+            };
+
+            const response = await fetch(`http://localhost:8080/artist/create?AId=${AId}&Artist_Name=${Artist_Name}&Body=${Body}&IMG_URL=${IMG_URL}&slug=${slug}` , {
+                method: "POST",
+                body: JSON.stringify(todo),
+                headers: { 'Content-Type': 'application/json'} 
+            })
+            if (!response.ok) {
+                const errorText = await response.text(); // Get error message if available
+                throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+            }
+
+            console.log(response);
+
+            } catch(error) {
+                console.error("Error fetching data:", error);
+                return null;
+            }
+    }
+
 export async function authenticateUser(Username: string, Password: string) {
     try {
         const response = await fetch(`http://localhost:8080/user/login`, {

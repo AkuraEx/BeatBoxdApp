@@ -14,6 +14,7 @@ export async function getServerSideProps() {
     id: entry.AId,
     artist: entry.Artist_Name,
     slug: entry.slug,
+    IMG_URL: entry.IMG_URL,
     date: entry.Added_On
   }));
  
@@ -30,18 +31,24 @@ export async function getServerSideProps() {
 
 
 
-export default function Home({ data,  }:
-  InferGetServerSidePropsType<typeof getServerSideProps>
-) {
+export default function Home({
+  data,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
-      <ul id = "index">   
-        {data.map((entry: any) => (
-      <div key={entry.id}>
-          <a href={`/artist/${entry.slug}`}><img className = "cover" src={`${entry.slug}.jpg`} alt={entry.artist} /></a>
-          <a href={`/artist/${entry.slug}`}>{entry.artist}<br/></a>
-      </div>
-      ))}
+      <ul id="index">
+        {data.map((entry: any, index: number) => (
+          <div key={entry.id}>
+            <span>{index + 1}. </span> 
+            <a href={`/artist/${entry.slug}`}>
+              <img className="cover" src={`${entry.IMG_URL}`} alt={entry.artist} />
+            </a>
+            <a href={`/artist/${entry.slug}`}>
+              {entry.artist}
+              <br />
+            </a>
+          </div>
+        ))}
       </ul>
     </div>
   );

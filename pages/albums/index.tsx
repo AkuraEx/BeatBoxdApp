@@ -15,6 +15,7 @@ export async function getServerSideProps() {
     id: entry.AlId,
     title: entry.Title,
     slug: entry.slug,
+    IMG_URL: entry.IMG_URL
   }));
  
 
@@ -38,7 +39,7 @@ export default function Home({ data,  }:
       <ul id = "index" className="albumContainer">   
         {data.map((entry: any) => (
       <div key={entry.id}>
-          <a href={`/albums/${entry.slug}`}><img className = "cover" src={`${entry.slug}.jpg`} alt={entry.title} /></a>
+          <a href={`/albums/${entry.slug}`}><img className = "cover" src={entry.IMG_URL} alt={entry.title} /></a>
           <a href={`/albums/${entry.slug}`}>{entry.title}<br/></a>
       </div>
       ))}

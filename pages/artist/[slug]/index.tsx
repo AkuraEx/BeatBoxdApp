@@ -2,6 +2,7 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import  React  from "react";
 import { fetchArtistsAlbums, fetchArtist } from "../../../utils/api.ts";
+import { spotfetchAlbums } from "../../../utils/spotify.ts";
 
 export async function getServerSideProps(context: any) {
     const { slug } = context.params as { slug: string };
@@ -28,6 +29,9 @@ export async function getServerSideProps(context: any) {
     };
   }
 
+  
+
+
 return {
     props: { albums, 
         artistData: artistRes
@@ -46,7 +50,7 @@ export default function Home({ albums, artistData }: InferGetServerSidePropsType
                 Back to Front
             </a>
             <div>
-                <img className = "cover" src={`../${artistData.slug}.jpg`} alt="img broke yo" />
+                <img className = "cover" src={artistData.IMG_URL} alt="img broke yo" />
                 <p> {artistData.Artist_Name}<br/>
                     {artistData.Body}<br/>
                     {artistData.Added_On} <br/><br/>
@@ -57,7 +61,7 @@ export default function Home({ albums, artistData }: InferGetServerSidePropsType
             <ul id = "index">   
                     {albums.map((entry: any) => (
                 <div key={entry.AlId}>
-            <a href={`/albums/${entry.slug}`}><img className = "cover" src={`../${entry.slug}.jpg`} alt={entry.artist} /></a>
+            <a href={`/albums/${entry.slug}`}><img className = "cover" src={`entry.IMG`} alt={entry.artist} /></a>
                     <div>
                     Title: {entry.Title}<br/>
                     Body: {entry.Body}<br/>
