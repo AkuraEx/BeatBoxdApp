@@ -1,9 +1,7 @@
 "use client";
-import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
-import Image from "next/image";
+import type { InferGetServerSidePropsType } from 'next';
 import { fetchAlbums } from "../../utils/api.ts";
 import  React  from "react";
-import { useAuth } from "../../context/AuthContext"
 
 
   

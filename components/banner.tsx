@@ -16,7 +16,7 @@ const Banner = () => {
   return (
     <div className="mybanner">
         <div className = "clickable">
-          <img onClick={() => router.push('/')} width="300" height="250" src="/BeatboxdReal(real).png" alt="BeatBoxd" />
+          <img onClick={() => router.push('/')} width="300" height="250" src="/beatboxdReal(real).png" alt="BeatBoxd" />
         </div>
       <div className="button-group">
         <button onClick={() => router.push('/artist')} className="my-button">Artists</button>
