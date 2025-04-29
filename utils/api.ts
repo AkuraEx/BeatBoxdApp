@@ -2,7 +2,7 @@ import { Result } from "postcss";
 
 export async function fetchReviews(AlId: number) {
     try {
-        const response = await fetch(`http://localhost:8080/reviews?AlId=${AlId}`, {
+        const response = await fetch(`http://34.45.154.74:8080/reviews?AlId=${AlId}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -30,7 +30,7 @@ export async function createReview(UId: string, Username: string, AlId: number, 
             Rate: Rate
         };
 
-        const response = await fetch(`http://localhost:8080/review?UId=${UId}&Username=${Username}&AlId=${AlId}&Body=${Body}&Rate=${Rate}` , {
+        const response = await fetch(`http://34.45.154.74:8080/review?UId=${UId}&Username=${Username}&AlId=${AlId}&Body=${Body}&Rate=${Rate}` , {
             method: "POST",
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json'} 
@@ -50,7 +50,7 @@ export async function createReview(UId: string, Username: string, AlId: number, 
 
 export async function fetchAlbums() {
     try {
-        const response = await fetch("http://localhost:8080/albums");
+        const response = await fetch("http://34.45.154.74:8080/albums");
         if(!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -65,7 +65,7 @@ export async function fetchAlbums() {
 
 export async function searchArtists(query: string) {
     try {
-        const response = await fetch(`http://localhost:8080/search/artist?query=${query}`, {
+        const response = await fetch(`http://34.45.154.74:8080/search/artist?query=${query}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -85,7 +85,7 @@ export async function searchArtists(query: string) {
 
 export async function searchAlbums(query: string) {
     try {
-        const response = await fetch(`http://localhost:8080/search/album?query=${query}`, {
+        const response = await fetch(`http://34.45.154.74:8080/search/album?query=${query}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -104,7 +104,7 @@ export async function searchAlbums(query: string) {
 }
 export async function fetchAlbum(field: string, value: any) {
     try {
-        const response = await fetch(`http://localhost:8080/album?field=${field}&value=${value}`, {
+        const response = await fetch(`http://34.45.154.74:8080/album?field=${field}&value=${value}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -124,7 +124,7 @@ export async function fetchAlbum(field: string, value: any) {
 
 export async function fetchFriendsAlbums(UId: string) {
     try {
-        const response = await fetch(`http://localhost:8080/albums/friends?UId=${UId}`, {
+        const response = await fetch(`http://34.45.154.74:8080/albums/friends?UId=${UId}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -144,7 +144,7 @@ export async function fetchFriendsAlbums(UId: string) {
 
 export async function fetchFriendsReviews(UId: string) {
     try {
-        const response = await fetch(`http://localhost:8080/review/friends?UId=${UId}`, {
+        const response = await fetch(`http://34.45.154.74:8080/review/friends?UId=${UId}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -163,7 +163,7 @@ export async function fetchFriendsReviews(UId: string) {
 
 export async function fetchArtistsAlbums(AId: number) {
     try {
-        const response = await fetch(`http://localhost:8080/artists/albums?AId=${AId}`, {
+        const response = await fetch(`http://34.45.154.74:8080/artists/albums?AId=${AId}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -182,7 +182,7 @@ export async function fetchArtistsAlbums(AId: number) {
 
 export async function fetchArtists() {
     try {
-        const response = await fetch("http://localhost:8080/artists");
+        const response = await fetch("http://34.45.154.74:8080/artists");
         if(!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -197,7 +197,7 @@ export async function fetchArtists() {
 
 export async function fetchArtist(field: string, value: any) {
     try {
-        const response = await fetch(`http://localhost:8080/artist?field=${field}&value=${value}`, {
+        const response = await fetch(`http://34.45.154.74:8080/artist?field=${field}&value=${value}`, {
             method: "Get",
         })
         if (!response.ok) {
@@ -216,7 +216,7 @@ export async function fetchArtist(field: string, value: any) {
 
 export async function findUser(Username: string) {
     try {
-        const response = await fetch(`http://localhost:8080/user/find?Username=${Username}`, {
+        const response = await fetch(`http://34.45.154.74:8080/user/find?Username=${Username}`, {
             method: "Get",
         })
         if (!response.ok)    {
@@ -235,7 +235,7 @@ export async function findUser(Username: string) {
 
 export async function findUserSaved(UId: string) {
     try {
-        const response = await fetch(`http://localhost:8080/user/album?UId=${UId}`, {
+        const response = await fetch(`http://34.45.154.74:8080/user/album?UId=${UId}`, {
             method: "GET",
         })
         if (!response.ok)    {
@@ -256,7 +256,7 @@ export async function findUserSaved(UId: string) {
 
 export async function findFollowing(UId: string) {
     try {
-        const response = await fetch(`http://localhost:8080/follow/following?UId=${UId}`, {
+        const response = await fetch(`http://34.45.154.74:8080/follow/following?UId=${UId}`, {
             method: "GET",
         })
         if (!response.ok)    {
@@ -283,7 +283,7 @@ export async function followUser(Follower_Id: string, Followee_Id: string) {
             Followee_Id: Followee_Id
         };
 
-        const response = await fetch(`http://localhost:8080/follow/user?Follower_Id=${Follower_Id}&Followee_ID=${Followee_Id}` , {
+        const response = await fetch(`http://34.45.154.74:8080/follow/user?Follower_Id=${Follower_Id}&Followee_ID=${Followee_Id}` , {
             method: "POST",
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json'} 
@@ -309,7 +309,7 @@ export async function createUser(Username: string, Email: string, Password: stri
             Password: Password
         };
 
-        const response = await fetch(`http://localhost:8080/user/signup?Username=${Username}&Email=${Email}&Password=${Password}` , {
+        const response = await fetch(`http://34.45.154.74:8080/user/signup?Username=${Username}&Email=${Email}&Password=${Password}` , {
             method: "POST",
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json'} 
@@ -340,7 +340,7 @@ export async function createAlbum(AId: string, ALId: string, Title: string, Body
                 slug: slug
             };
 
-            const response = await fetch(`http://localhost:8080/album/create?AId=${AId}&ALId=${ALId}&Title=${Title}&Body=${Body}&IMG_URL=${IMG_URL}&slug=${slug}` , {
+            const response = await fetch(`http://34.45.154.74:8080/album/create?AId=${AId}&ALId=${ALId}&Title=${Title}&Body=${Body}&IMG_URL=${IMG_URL}&slug=${slug}` , {
                 method: "POST",
                 body: JSON.stringify(todo),
                 headers: { 'Content-Type': 'application/json'} 
@@ -369,7 +369,7 @@ export async function createArtist(AId: string, Artist_Name: string, Body: strin
                 slug: slug
             };
 
-            const response = await fetch(`http://localhost:8080/artist/create?AId=${AId}&Artist_Name=${Artist_Name}&Body=${Body}&IMG_URL=${IMG_URL}&slug=${slug}` , {
+            const response = await fetch(`http://34.45.154.74:8080/artist/create?AId=${AId}&Artist_Name=${Artist_Name}&Body=${Body}&IMG_URL=${IMG_URL}&slug=${slug}` , {
                 method: "POST",
                 body: JSON.stringify(todo),
                 headers: { 'Content-Type': 'application/json'} 
@@ -394,7 +394,7 @@ export async function saveAlbum(UId: string, AlId: string) {
             AlId: AlId
         };
 
-        const response = await fetch(`http://localhost:8080/album/save?UId=${UId}&AlId=${AlId}` , {
+        const response = await fetch(`http://34.45.154.74:8080/album/save?UId=${UId}&AlId=${AlId}` , {
                 method: "POST",
                 body: JSON.stringify(todo),
                 headers: { 'Content-Type': 'application/json'} 
@@ -414,7 +414,7 @@ export async function saveAlbum(UId: string, AlId: string) {
 
 export async function authenticateUser(Username: string, Password: string) {
     try {
-        const response = await fetch(`http://localhost:8080/user/login`, {
+        const response = await fetch(`http://34.45.154.74:8080/user/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json"},
             body: JSON.stringify({ Username, Password }),
@@ -441,7 +441,7 @@ export async function authenticateSession() {
     const token = localStorage.getItem("token");
     if (!token) return { token: null, user: null };
 
-    const response = await fetch(`http://localhost:8080/user/session`, {
+    const response = await fetch(`http://34.45.154.74:8080/user/session`, {
       method: "GET",
       headers: {
         "x-access-token": token,
