@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { createReview } from '../utils/api';
 import { Star, StarHalf } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 type AlId = { AlId: number };
 type Props = { albumData: AlId };
@@ -12,6 +13,8 @@ const ReviewForm = ({ albumData }: Props) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [hoverRating, setHoverRating] = useState<number | null>(null);
+  const { UId, user } = useAuth();
+
 
   const stars = Array.from({ length: 10 }, (_, i) => (i + 1) * 1);
 
@@ -30,7 +33,7 @@ const ReviewForm = ({ albumData }: Props) => {
     setMessage('');
 
     try {
-      const res = await createReview(albumData?.AlId, formData.body, formData.rating);
+      const res = await createReview(String(UId), String(user), albumData?.AlId, formData.body, formData.rating);
 
       if (res) {
         setMessage('✅ Success: Review submitted!');
@@ -47,7 +50,7 @@ const ReviewForm = ({ albumData }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded-lg">
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 border rounded-lg">
       <div>
         <label className="block font-bold">Write your review here:</label>
         <input
@@ -55,19 +58,19 @@ const ReviewForm = ({ albumData }: Props) => {
           name="body"
           value={formData.body}
           onChange={handleChange}
-          className="w-full border p-2 rounded text-black"
+          className="w-full border p-14 rounded text-black"
           required
         />
       </div>
 
-      <div className="mt-3">
+      <div className="mt-14">
         <label className="block font-bold">Rating:</label>
         <div className="flex gap-1">
           {stars.map((starValue) => (
             <Star
               key={starValue}
               className={`cursor-pointer transition-all ${
-                (hoverRating ?? formData.rating) >= starValue ? "text-yellow-400" : "text-gray-300"
+                (hoverRating ?? formData.rating) >= starValue ? "text-orange-400" : "text-gray-300"
               }`}
               onMouseEnter={() => setHoverRating(starValue)}
               onMouseLeave={() => setHoverRating(null)}
@@ -83,7 +86,7 @@ const ReviewForm = ({ albumData }: Props) => {
 
       <button
         type="submit"
-        className="mt-4 w-full bg-blue-500 text-white py-2 rounded disabled:opacity-50"
+        className="mt-14 w-full bg-blue-500 text-white py-2 rounded disabled:opacity-50"
         disabled={loading}
       >
         {loading ? 'Submitting...' : 'Submit'}

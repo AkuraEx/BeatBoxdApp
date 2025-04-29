@@ -19,6 +19,35 @@ export async function fetchReviews(AlId: number) {
     }
 }
 
+export async function createReview(UId: string, Username: string, AlId: number, Body: string, Rate: number) {
+    try {
+
+        const todo = {
+            UId: UId,
+            Username: Username,
+            AlId: AlId,
+            Body: Body,
+            Rate: Rate
+        };
+
+        const response = await fetch(`http://localhost:8080/review?UId=${UId}&Username=${Username}&AlId=${AlId}&Body=${Body}&Rate=${Rate}` , {
+            method: "POST",
+            body: JSON.stringify(todo),
+            headers: { 'Content-Type': 'application/json'} 
+        })
+        if (!response.ok) {
+            const errorText = await response.text(); // Get error message if available
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+
+        return Result;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+
 export async function fetchAlbums() {
     try {
         const response = await fetch("http://localhost:8080/albums");
@@ -34,19 +63,98 @@ export async function fetchAlbums() {
     }
 }
 
+export async function searchArtists(query: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/search/artist?query=${query}`, {
+            method: "Get",
+        })
+        if (!response.ok) {
+            const errorText = await response.text(); 
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+        
+         const data = await response.json(); 
+
+        return data.artists;
+
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+export async function searchAlbums(query: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/search/album?query=${query}`, {
+            method: "Get",
+        })
+        if (!response.ok) {
+            const errorText = await response.text(); 
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+        
+         const data = await response.json(); 
+
+        return data.albums;
+
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
 export async function fetchAlbum(field: string, value: any) {
     try {
         const response = await fetch(`http://localhost:8080/album?field=${field}&value=${value}`, {
             method: "Get",
         })
         if (!response.ok) {
-            const errorText = await response.text(); // Get error message if available
+            const errorText = await response.text(); 
             throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
         }
         
          const data = await response.json(); 
 
         return data.album;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+
+export async function fetchFriendsAlbums(UId: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/albums/friends?UId=${UId}`, {
+            method: "Get",
+        })
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+        
+         const data = await response.json(); 
+        console.log(data);
+        return data.albums;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+
+export async function fetchFriendsReviews(UId: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/review/friends?UId=${UId}`, {
+            method: "Get",
+        })
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+        
+         const data = await response.json(); 
+        console.log(data);
+        return data.reviews;
     } catch(error) {
         console.error("Error fetching data:", error);
         return null;
@@ -145,16 +253,37 @@ export async function findUserSaved(UId: string) {
     }
 }
 
-export async function createReview(AlId: number, Body: string, Rate: number) {
+
+export async function findFollowing(UId: string) {
+    try {
+        const response = await fetch(`http://localhost:8080/follow/following?UId=${UId}`, {
+            method: "GET",
+        })
+        if (!response.ok)    {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+        }
+
+        const data = await response.json();
+        console.log(data.message);
+
+        return data.message;
+    } catch(error) {
+        console.error("Error fetching data:", error);
+        return null;
+    }
+}
+
+
+export async function followUser(Follower_Id: string, Followee_Id: string) {
     try {
 
         const todo = {
-            AlId: AlId,
-            Body: Body,
-            Rate: Rate
+            Follower_Id: Follower_Id,
+            Followee_Id: Followee_Id
         };
 
-        const response = await fetch(`http://localhost:8080/review?AlId=${AlId}&Body=${Body}&Rate=${Rate}` , {
+        const response = await fetch(`http://localhost:8080/follow/user?Follower_Id=${Follower_Id}&Followee_ID=${Followee_Id}` , {
             method: "POST",
             body: JSON.stringify(todo),
             headers: { 'Content-Type': 'application/json'} 
@@ -258,7 +387,7 @@ export async function createArtist(AId: string, Artist_Name: string, Body: strin
             }
     }
 
-export async function saveAlbum(UId: number, AlId: string) {
+export async function saveAlbum(UId: string, AlId: string) {
     try {
         const todo = {
             UId: UId,

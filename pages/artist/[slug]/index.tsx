@@ -54,7 +54,6 @@ export default function Home({ albums, artistData }: InferGetServerSidePropsType
                 <img className = "album" src={artistData.IMG_URL} alt="img broke yo" />
                 <p> {artistData.Artist_Name}<br/>
                     {artistData.Body}<br/>
-                    {artistData.Added_On} <br/><br/>
                 </p>
             </div>
 
@@ -64,9 +63,8 @@ export default function Home({ albums, artistData }: InferGetServerSidePropsType
                 <div key={entry.AlId} className='album'>
             <a href={`/albums/${entry.slug}`}><img className = "cover" src={entry.IMG_URL} alt={entry.artist} /></a>
                     <div className="title">
-                    Title: {entry.Title}<br/>
-                    Body: {entry.Body}<br/>
-                    Date: {entry.Date}</div>
+                    Title: {entry.Title}
+                    </div>
                 </div>
                 ))}
             </ul>

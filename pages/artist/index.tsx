@@ -36,11 +36,16 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
+      <div className='frontpageHeader'>
+            <div className='underline-wrapper'>
+              <p className='center'>Artists</p>
+            </div>
+      </div>
       <ul id="index" className="albumContainer">
-        {data.map((entry: any, index: number) => (
-          <div key={entry.id}>
+        {data.map((entry: any) => (
+          <div key={entry.id}  className='album'>
             <a href={`/artist/${entry.slug}`} max-width="300px">
-              <img className="album" src={`${entry.IMG_URL}`} alt={entry.artist} />
+              <img className="cover" src={`${entry.IMG_URL}`} alt={entry.artist} />
             </a>
             <a href={`/artist/${entry.slug}`}>
               {entry.artist}

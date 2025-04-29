@@ -1,43 +1,53 @@
 'use client';
 import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
 import  React  from "react";
-import { findUser, findUserSaved } from "../../../utils/api.ts";
+import { findUser, findUserSaved, findFollowing, followUser } from "../../../utils/api.ts";
 import { useAuth } from "../../../context/AuthContext"
 
 export async function getServerSideProps(context: any) {
   try {
     const { slug } = context.params as { slug: string };
-    console.log("Fetching user with slug:", slug);
     const profileRes = await findUser(slug);
-    console.log(profileRes.User[0].Username);
+    if(profileRes) {
 
-    console.log(profileRes.User[0].UId);
-    const albumRes = await findUserSaved(profileRes.User[0].UId);
+      const albumRes = await findUserSaved(profileRes.User[0].UId);
 
-    console.log(albumRes)
+      console.log(albumRes)
 
-    const albums = albumRes.map((entry: any) => ({
-    AlId: entry.AlId,
-    AId: entry.AId,
-    Title: entry.Title,
-    Body: entry.Body,
-    IMG_URL: entry.IMG_URL,
-    slug: entry.slug,
-    Date: entry.Added_On,
-    }));
+      const albums = albumRes.map((entry: any) => ({
+      AlId: entry.AlId,
+      AId: entry.AId,
+      Title: entry.Title,
+      Body: entry.Body,
+      IMG_URL: entry.IMG_URL,
+      slug: entry.slug,
+      Date: entry.Added_On,
+      }));
+
+      const followRes = await findFollowing(profileRes.User[0].UId);
+
+      const following = followRes.map((entry: any) => ({
+        UId: entry.UId,
+        Username: entry.Username
+      }));
+
+        return {
+        props: { albums,
+              following,
+              profileData: profileRes.User[0],
+              profileUser: slug
+        },
+      };
+    }
 
     if (!profileRes) {
       return {
         notFound: true,
+        albums: null
       };
     }
 
-    return {
-      props: { albums,
-            profileData: profileRes.User[0],
-            profileUser: slug
-       },
-    };
+
   } catch (error) {
     console.error("Error in getServerSideProps:", error);
     return {
@@ -46,18 +56,25 @@ export async function getServerSideProps(context: any) {
   }
 }
 
-export default function ProfilePage({ profileData, profileUser, albums }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    const { isAuthenticated, user } = useAuth();
+export default function ProfilePage({ profileData, profileUser, albums, following }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+    const { isAuthenticated, user, UId } = useAuth();
 
   if (!profileData) {
     return <div>User not found</div>;
   }
 
+  const follow = () => {
+    const followRes = followUser(String(UId), profileData.UId);
+    console.log(followRes);
+  }
+
   
   return (
     <div>
-      <a href="/">Back to Home</a>
-      <h1>{profileData.Username}</h1>
+      <a className="clickableText" href="/">Back to Home</a>
+      <div className='underline-wrapper'>
+        <h1 className='underlineBoxd'>{profileData.Username}'s Profile</h1>
+      </div>
 
        <h1> Saved Albums: <br/><br/></h1>
           <ul id = "index" className="profileContainer">   
@@ -69,10 +86,42 @@ export default function ProfilePage({ profileData, profileUser, albums }: InferG
               ))}
           </ul>
 
+
+    {(!user || profileUser != user) && ( 
+    <div>
+      <h1> This User is Following: <br/><br/></h1>
+          <ul id = "index" className="profileContainer">   
+                  {following.map((entry: any) => (
+              <div key={entry.UId} className='profile_album'>
+          <a className="friend-box" href={`/profile/${entry.Username}`}>{entry.Username}</a>
+
+              </div>
+              ))}
+          </ul>
+      </div>
+    )}
+
+
+
     {isAuthenticated && profileUser === user && (
     <div>
-        <h1> Hey bro, only you can see this right now nobody else</h1>
+
+        <h1> People Who You Follow: <br/><br/></h1>
+          <ul id = "index" className="profileContainer">   
+                  {following.map((entry: any) => (
+              <div key={entry.UId} className='profile_album'>
+          <a className="friend-box" href={`/profile/${entry.Username}`}>{entry.Username}</a>
+
+              </div>
+              ))}
+          </ul>
     </div>
+    )}
+
+    {isAuthenticated && profileUser != user && (
+      <div>
+        <button onClick={follow} className='my-button'>Follow</button>
+      </div>
     )}
 
 

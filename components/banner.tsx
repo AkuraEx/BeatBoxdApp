@@ -21,6 +21,7 @@ const Banner = () => {
       <div className="button-group">
         <button onClick={() => router.push('/artist')} className="my-button">Artists</button>
         <button onClick={() => router.push('/albums')} className="my-button">Albums</button>
+        <button onClick={() => router.push('/search')} className='my-button'>Search</button>
 
         {isAuthenticated ? (
           <>

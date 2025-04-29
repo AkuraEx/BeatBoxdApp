@@ -36,6 +36,11 @@ export default function Home({ data  }:
 ) {
   return (
     <div>
+      <div className='frontpageHeader'>
+          <div className='underline-wrapper'>
+            <p className='center'>Albums</p>
+          </div>
+        </div>
       <ul id = "index" className="albumContainer">   
         {data.map((entry: any) => (
       <div key={entry.id} className="album">
