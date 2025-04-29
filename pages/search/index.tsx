@@ -7,14 +7,14 @@ export default function Home() {
   const [artistSearch, setArtistSearch] = useState('');
   const [albumSearch, setAlbumSearch] = useState('');
 
-  const handleArtistSearch = (e) => {
+  const handleArtistSearch = (e: any) => {
     e.preventDefault();
     if (artistSearch) {
       router.push(`/search/artist/${artistSearch}`);
     }
   };
 
-  const handleAlbumSearch = (e) => {
+  const handleAlbumSearch = (e: any) => {
     e.preventDefault();
     if (albumSearch) {
       router.push(`/search/album/${albumSearch}`);
